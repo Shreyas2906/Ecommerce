@@ -1,0 +1,45 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<div class="container">
+  <h3 class="h3">Wishlists</h3>
+  <div class="row">
+  	<% @likes.each do |product| %>
+	    <div class="col-md-3 col-sm-6">
+	      <div class="product-grid">
+	        <div class="product-image">
+	          <a href="#">
+	          <!--  <h3 class="image"><a href="/products/<%= product.product.id %>"><%#= image_tag product.product.image_url %></a></h3> -->
+	          </a>
+	          <ul class="social">
+	            <li><a href="/remove_to_dolike/<%= product.product.id %>" data-tip="Dislike"><i class="fa fa-search"></i></a></li>
+	            <li>
+	            	<a href="/remove_to_wishlist/<%= product.product.id %>" data-tip="Remove to Wishlist"><i class="fas fa-heart-broken"></i></a>
+							</li>
+	            <li><a href="/add_to_cart/<%= product.product.id %>" data-tip="Add to Cart"><i class="fa fa-shopping-cart"></i></a></li>
+	          </ul>
+	          <span class="product-new-label" style="background-color: indianred;">Sale</span>
+	          <!-- <span class="product-discount-label" style="background-color: seagreen;"><%#= product.product.discount %>%</span>
+	        </div> -->
+	       <!--  <ul class="rating">
+	          <li class="fa fa-star"></li>
+	          <li class="fa fa-star"></li>
+	          <li class="fa fa-star"></li>
+	          <li class="fa fa-star"></li>
+	          <li class="fa fa-star disable"></li>
+	        </ul> -->
+	        <div class="product-content">
+	          <h3 class="title"><a href="/products/<%= product.product.id %>"><%= product.product.title %></a></h3>
+	          <div class="price">
+	            <span> <i class= "fa fa-rupee"></i><%= product.product.price %></span>
+	          </div>
+	          <!-- <a class="add-to-cart" href="/add_to_cart/<%#= product.id %>">+ Add To Cart</a> -->
+	        </div>
+	      </div><br/>
+	    </div>
+	  <% end %>  
+  </div>
+</div>
+<hr>

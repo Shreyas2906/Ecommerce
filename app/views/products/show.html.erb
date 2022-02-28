@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @product.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @product.description %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @product.price %>
+</p>
+
+<p>
+  <strong>Image:</strong>
+  <%= image_tag @product.image_url rescue nil%>
+</p>
+
+<p>
+  <strong>Size:</strong>
+  <%= @product.size %>
+</p>
+
+<p>
+  <strong>SubCategory:</strong>
+  <%= @product.sub_category_id %>
+</p>
+<%= button_to 'Like', product_likes_path(@product), method: :post %>
+<p><%= @product.likes.count %> <%= (@product.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+
+<%= link_to 'Edit', edit_product_path(@product) %> |
+<%= link_to 'Back', products_path %>

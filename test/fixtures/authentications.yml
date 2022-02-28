@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  provider: MyString
+  uid: MyString
+  user_id: 1
+  token: MyText
+  token_expired_at: 2022-01-28 10:25:42
+
+two:
+  provider: MyString
+  uid: MyString
+  user_id: 1
+  token: MyText
+  token_expired_at: 2022-01-28 10:25:42

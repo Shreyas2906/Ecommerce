@@ -1,0 +1,90 @@
+<p id="notice"><%= notice %></p>
+<h1>Products</h1>
+<table>
+   <tbody>
+      <div class="container">
+         <h3 class="h3">shopping Demo-1 </h3>
+         <div class="row">
+            <% @products.each do |product|%>
+            <div class="col-md-3 col-sm-6">
+               <div class="product-grid">
+                  <div class="product-image">
+                     <br>
+                     <a href="#">
+                     <%= image_tag product.image_url rescue nil%> 
+                     </a>
+                     <!-- <ul class="social">
+                        <li><a href="" data-tip="Quick View"><i class="fa fa-search"></i></a></li>
+                        </ul> -->
+                     <!-- <span class="product-new-label">Sale</span>
+                        <span class="product-discount-label">20%</span> -->
+                  </div>
+                  <!-- <ul class="rating">
+                     <li class="fa fa-star"></li>
+                     <li class="fa fa-star"></li>
+                     <li class="fa fa-star"></li>
+                     <li class="fa fa-star"></li>
+                     <li class="fa fa-star disable"></li>
+                     </ul> -->
+                  <div class="product-content">
+                     <h3 class="title"><a href="#"><%= product.title %></a></h3>
+                     <!--  <div class="price">$16.00
+                        <span>$20.00</span>
+                        </div> -->
+                     <% if Wishlist.where(user_id: current_user.id, product_id: product.id).present? %>
+                     <%= link_to "/wishlists/#{Wishlist.where(user_id: current_user.id, product_id: product.id).last.id}/remove_to_wishlist" do %>
+                     Remove To Wishlist
+                     <% end %>
+                     <% else %>
+                     <%= link_to "/products/#{product.id}/add_to_wishlist" do %>
+                     Add To Wishlist
+                     <% end %>
+                     <% end %>
+                     ||
+                     <%= link_to "/products/#{product.id}/add_to_cart" do %>
+                     Add To Cart
+                     <% end %>
+                     ||
+                     <li>
+
+                        <% if current_user.present? %>
+                        <% if Like.where(user_id: current_user, product_id: product.id).present? %>
+                        <a href="/products/<%= product.id %>/dislike_products" data-tip="Dislike">DLike</a>
+                        <% else%>
+                        <a href="/products/<%= product.id %>/like_products" data-tip="Like">Like</a>
+                        <% end %> 
+                        <% end %> 
+                     </li>
+                  </div>
+               </div>
+               <br>
+            </div>
+            <% end %>
+         </div>
+      </div>
+   </tbody>
+</table>
+<br>
+<!-- <%# @products.each do |product| %>
+   <tr>
+   <td><%#= product.title %></td>
+   <td><%#= product.description %></td>
+   <td><%#= product.price %></td>
+   <td>  <%#= image_tag product.image_url rescue nil%>
+   </td>
+   <td><%#= product.size %></td>
+   <td><%#= product.sub_category_id %></td>
+   <td><%#= link_to 'Show', product %></td>
+   <td><%#= link_to 'Edit', edit_product_path(product) %></td>
+   <td><%#= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+   <td>  <%#= link_to "/products/#{product.id}/add_to_cart" do %>
+   Add To Cart
+   
+   
+   <%# end %> </td>
+   </tr>
+   <%# end %> -->
+<!--  </tbody>
+   </table> -->
+
+<%= link_to 'New Product', new_product_path %>

@@ -1,0 +1,56 @@
+<table>
+ 
+
+  <tbody>
+    <div class="container">
+    <h3 class="h3">shopping Demo-1 </h3>
+    <div class="row">
+      <% @products.each do |product|%>
+        <div class="col-md-3 col-sm-6">
+            <div class="product-grid">
+                <div class="product-image"><br>
+                    <a href="#">
+                        <%= image_tag product.image_url rescue nil%> 
+                    </a>
+                   
+                    <!-- <ul class="social">
+                        <li><a href="" data-tip="Quick View"><i class="fa fa-search"></i></a></li>
+                    </ul> -->
+                    <!-- <span class="product-new-label">Sale</span>
+                    <span class="product-discount-label">20%</span> -->
+                </div>
+
+
+                <!-- <ul class="rating">
+                    <li class="fa fa-star"></li>
+                    <li class="fa fa-star"></li>
+                    <li class="fa fa-star"></li>
+                    <li class="fa fa-star"></li>
+                    <li class="fa fa-star disable"></li>
+                </ul> -->
+                <div class="product-content">
+                    <h3 class="title"><a href="#"><%= product.title %></a></h3>
+                   <!--  <div class="price">$16.00
+                        <span>$20.00</span>
+                    </div> -->
+    <% if Wishlist.where(user_id: current_user.id, product_id: product.id).present? %>
+                        <%= link_to "/wishlists/#{Wishlist.where(user_id: current_user.id, product_id: product.id).last.id}/remove_to_wishlist" do %>
+                          Remove To Wishlist
+                    <% end %>
+                    <% else %>
+                     <%= link_to "/products/#{product.id}/add_to_wishlist" do %>
+                          Add To Wishlist
+                    <% end %>
+                    <% end %>
+                     ||
+                    <%= link_to "/products/#{product.id}/add_to_cart" do %>
+                          Add To Cart
+                    <% end %>
+                </div> 
+            </div><br>
+        </div> 
+        <% end %>
+      </div> 
+    </div>
+  </tbody>
+</table>
