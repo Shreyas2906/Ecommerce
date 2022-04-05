@@ -70,7 +70,7 @@ def checkout
   end
 
   def checkout_razor
-   require "uri"
+    require "uri"
     require "net/http"
 
     url = URI("https://api.razorpay.com/v1/payment_links")
@@ -81,7 +81,7 @@ def checkout
     request = Net::HTTP::Post.new(url)
     request["Content-Type"] = "application/json"
     request["Authorization"] = "Basic cnpwX3Rlc3RfNkhNVXdhZ2JRWTJzZUY6N1pkUTRkYk9SVW1DNnk5UEo0OE94clJ1"
-    request.body = "{\n  \"amount\": 1000,\n  \"currency\": \"INR\",\n  \"accept_partial\": true,\n  \"first_min_partial_amount\": 100,\n  \"expire_by\": 1691097057,\n  \"reference_id\": \"@ran\",\n  \"description\": \"Payment for policy no #23456\",\n  \"customer\": {\n    \"name\": \"Gaurav Kumar\",\n    \"contact\": \"+919999999999\",\n    \"email\": \"gaurav.kumar@example.com\"\n  },\n  \"notify\": {\n    \"sms\": true,\n    \"email\": true\n  },\n  \"reminder_enable\": true,\n  \"notes\": {\n    \"policy_name\": \"Jeevan Bima\"\n  },\n  \"callback_url\": \"https://example-callback-url.com/\",\n  \"callback_method\": \"get\"\n}"
+    request.body = "{\n  \"amount\": 1000,\n  \"currency\": \"INR\",\n  \"accept_partial\": true,\n  \"first_min_partial_amount\": 100,\n  \"expire_by\": 1691097057,\n  \"reference_id\": \"TSsd198111\",\n  \"description\": \"Payment for policy no #23456\",\n  \"customer\": {\n    \"name\": \"Gaurav Kumar\",\n    \"contact\": \"+919999999999\",\n    \"email\": \"gaurav.kumar@example.com\"\n  },\n  \"notify\": {\n    \"sms\": true,\n    \"email\": true\n  },\n  \"reminder_enable\": true,\n  \"notes\": {\n    \"policy_name\": \"Jeevan Bima\"\n  },\n  \"callback_url\": \"https://example-callback-url.com/\",\n  \"callback_method\": \"get\"\n}"
     byebug
     @response = https.request(request)
     @sort_url = JSON.parse(@response.read_body)["short_url"]
