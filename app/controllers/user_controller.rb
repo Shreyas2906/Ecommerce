@@ -9,8 +9,8 @@ class UsersController < ApplicationController
         UserMailer.with(user: @user).welcome_email.deliver_later
 
         
-    end
   end
+
 
   # ...
 end
