@@ -42,9 +42,30 @@
 <% end %> 
 
 total amount = <%= @cart.subtotal %>
-  <form action="/create-checkout-session" method="POST">
-       <button type="submit" class="btn btn-warning btn-block btn-lg"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Checkout</button>
-  </form>
 
+<strong>Select one Address </strong>
+        <%= form_for "data", url: "/checkout_razor" do |form| %>
+           
+            
+          <button type="submit" class="btn btn-warning btn-block btn-lg"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Checkout with Razorpay &#8377;<%= @cart.subtotal %></button>
+        </div>
+        
+           <a href="/addresses/new">Create new address </a>
 
-  
+          <div class="card">
+            <div class="card-body">
+               <!-- <form action="/addresses" method="GET"> -->
+                <!-- <button type="submit" value = "dadad" class="btn btn-warning btn-block btn-lg"><i class="fa fa-shopping-bag" aria-hidden="true"></i> cash on delivery &#8377;<%#= @cart.subtotal %></button> -->
+                <input type="submit" name="order[cash_on_delivery]" class="btn btn-warning btn-block btn-lg" value="cash on delivery &#8377;<%= @cart.subtotal %>" />
+              <!-- </form> -->
+              <br>
+              <!-- <form action="/create-checkout-session" method="POST"> -->
+                <button type="submit" class="btn btn-warning btn-block btn-lg"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Checkout with stripe &#8377;<%= @cart.subtotal %></button>
+
+                 
+              <!-- </form> -->
+            </div>
+          </div>
+        <% end %>  
+      </div>
+    </div>

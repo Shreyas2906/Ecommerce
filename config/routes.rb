@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :cats
   root "products#index"
 
   resources :homes
@@ -34,10 +35,17 @@ Rails.application.routes.draw do
 
   
   post "/create-checkout-session", to: "cart_items#checkout"
+  post "/checkout_razor", to: "cart_items#checkout_razor"
 
   get "/carts/success", to: "cart_items#success"
   get "/carts/cancel", to: "cart_items#cancel"
   get "/success", to: "cart_items#success_page"
   get "/cancel", to: "cart_items#cancel_page"
+
+
+  get "/orders", to: "orders#index"
+  get "/cancel/:order_id", to: "orders#cancel"
+
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
