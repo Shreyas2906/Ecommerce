@@ -81,12 +81,77 @@ def checkout
     request = Net::HTTP::Post.new(url)
     request["Content-Type"] = "application/json"
     request["Authorization"] = "Basic cnpwX3Rlc3RfNkhNVXdhZ2JRWTJzZUY6N1pkUTRkYk9SVW1DNnk5UEo0OE94clJ1"
-    request.body = "{\n  \"amount\": 1000,\n  \"currency\": \"INR\",\n  \"accept_partial\": true,\n  \"first_min_partial_amount\": 100,\n  \"expire_by\": 1691097057,\n  \"reference_id\": \"TSsd198111\",\n  \"description\": \"Payment for policy no #23456\",\n  \"customer\": {\n    \"name\": \"Gaurav Kumar\",\n    \"contact\": \"+919999999999\",\n    \"email\": \"gaurav.kumar@example.com\"\n  },\n  \"notify\": {\n    \"sms\": true,\n    \"email\": true\n  },\n  \"reminder_enable\": true,\n  \"notes\": {\n    \"policy_name\": \"Jeevan Bima\"\n  },\n  \"callback_url\": \"https://example-callback-url.com/\",\n  \"callback_method\": \"get\"\n}"
-    byebug
+    request.body = JSON.dump({
+      "amount":  current_user.cart.subtotal.to_i*100,
+      "currency": "INR",
+      "accept_partial": true,
+      "first_min_partial_amount": 100,
+      "expire_by": 1691097037,
+      "reference_id": Cart.random,
+      
+      "notify": {
+      "sms": true,
+      "email": true
+      },
+      "reminder_enable": true,
+      "notes": {
+      "policy_name": "TEST "
+      },
+      "callback_url": "http:/localhost:3000/cart_items_razor_success?product_ids=#{current_user.cart.cart_items.map(&:item_id)}&cart_id=#{current_user.cart.id}",
+      "callback_method": "get"
+      })
     @response = https.request(request)
     @sort_url = JSON.parse(@response.read_body)["short_url"]
+    current_user.cart.clear
 
   end
+
+
+  def refund
+    require "uri"
+    require "net/http"
+
+    url = URI("https://api.razorpay.com/v1/payments/pay_JFyzmJcpaLq7Qy/refund")
+
+    https = Net::HTTP.new(url.host, url.port)
+    https.use_ssl = true
+
+    request = Net::HTTP::Post.new(url)
+    request["Authorization"] = "Basic cnpwX3Rlc3RfNkhNVXdhZ2JRWTJzZUY6N1pkUTRkYk9SVW1DNnk5UEo0OE94clJ1"
+    request["Content-Type"] = "application/json"
+    request.body = "{  \n\"amount\": 1000\n}"
+
+    response = https.request(request)
+    puts response.read_body
+
+  end
+
+  def cart_items_razor_success
+  require "uri"
+  require "net/http"
+
+  url = URI("https://api.razorpay.com/v1/payments/#{params["razorpay_payment_id"]}")
+
+  https = Net::HTTP.new(url.host, url.port)
+  https.use_ssl = true
+
+  request = Net::HTTP::Get.new(url)
+  request["Authorization"] = "Basic cnpwX3Rlc3RfNkhNVXdhZ2JRWTJzZUY6N1pkUTRkYk9SVW1DNnk5UEo0OE94clJ1"
+  @response = https.request(request)
+  puts @response.read_body
+  order = OrderBooking.new
+  order.payment_intent = params["razorpay_payment_id"]
+  order.amount_total = JSON.parse(@response.body)["amount"]/100
+  order.customer_id = current_user.id
+  order.user_id = current_user.id
+  order.customer_email = JSON.parse(@response.body)["email"]
+  #order.customer_phone = JSON.parse(@response.body)["contact"]
+  order.order_id = JSON.parse(@response.body)["order_id"]
+  order.product_id = params[:product_ids]
+  order.save
+  OrderStatus.create(order_id: order.id, status: "created")
+  current_user.cart.clear
+  end  
 
   def success
     session = Stripe::Checkout::Session.retrieve(params[:session_id])
@@ -114,7 +179,6 @@ def checkout
   end
 
   def cancel
-    byebug
    
   end
 
@@ -123,7 +187,10 @@ def total
 end
 
 def cash_on_dilevery
-  
+  order = OrderBooking.new
+   
+    current_user.cart.clear
+    redirect_to "/success"
 end
   
 end

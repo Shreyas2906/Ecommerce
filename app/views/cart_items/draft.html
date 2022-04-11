@@ -1,0 +1,106 @@
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>subtotal</th>
+      <th>Category</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+	<% @cart_items.each do |a| %>
+		<tr>
+			<td><%= a.item.title %></td>
+			<td><%= a.quantity %></td>
+			<td><%= a.price  %></td>
+			<td><%= a.subtotal  %></td>>
+
+      <td><%#= a.item.category.name %></td>
+      <td><%#= a.description%></td>
+			<td><%#= a.item.category.name %></td>
+			<td><%#= a.description%></td>
+			<td><%= link_to 'Show', a %></td>
+      <td><%= link_to 'Edit', edit_product_path(a) %></td>
+      <td>  <%= link_to cart_item_remove_path(a) do %>
+               remove         
+            <% end %> </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% if @cart_items.count > 0 %>
+  <%= link_to @cart_items_path do %> 
+  Total Items
+  <%= @cart_items.count %>
+  <% end %>
+  <% else %>
+     <a href="#" class="menu-cart"><i class="fa fa-shopping-cart"></i> 0 </a>
+<% end %> 
+
+total amount = <%= @cart.subtotal %>
+
+<strong>Select one Address </strong>
+        <%= form_for "data", url: "/checkout_razor" do |form| %>
+           <%#= form_for "data", url: "/create-checkout-session" do |form| %>
+          <% current_user.addresses.each do |ad|%>
+        <div class="card" style="width: 18rem;">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item"><p><input type="radio" name="order[address_id]" class="choose_address" value="<%= ad.id %>" required> <%= ad.state %> , <%= ad.line1%> , <%= ad.phone%> , <%= ad.pincode%> , <%= ad.country%></p></li>
+            
+          </ul>
+        </div>
+          <% end %>
+           <a href="/addresses/new">Create new address </a>
+            
+          <button type="submit" class="btn btn-warning btn-block btn-lg"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Checkout with Razorpay &#8377;<%= @cart.subtotal %></button>
+        </div>
+        
+           <a href="/addresses/new">Create new address </a>
+
+          <div class="card">
+            <div class="card-body">
+               <!-- <form action="/addresses" method="GET"> -->
+                <!-- <button type="submit" value = "dadad" class="btn btn-warning btn-block btn-lg"><i class="fa fa-shopping-bag" aria-hidden="true"></i> cash on delivery &#8377;<%#= @cart.subtotal %></button> -->
+                <input type="submit" name="order[cash_on_delivery]" class="btn btn-warning btn-block btn-lg" value="cash on delivery &#8377;<%= @cart.subtotal %>" />
+              <!-- </form> -->
+              <br>
+              <!-- <form action="/create-checkout-session" method="POST"> -->
+                <button type="submit" class="btn btn-warning btn-block btn-lg"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Checkout with stripe &#8377;<%= @cart.subtotal %></button>
+
+                 
+              <!-- </form> -->
+            </div>
+          </div>
+        <% end %>  
+      </div>
+    </div>
+
+
+
+
+
+
+
+# require "uri"
+# require "net/http"
+
+# url = URI("https://api.razorpay.com/v1/payment_links")
+
+# https = Net::HTTP.new(url.host, url.port)
+# https.use_ssl = true
+
+# request = Net::HTTP::Get.new(url)
+# request["Authorization"] = "Basic cnpwX3Rlc3RfNkhNVXdhZ2JRWTJzZUY6N1pkUTRkYk9SVW1DNnk5UEo0OE94clJ1"
+
+# response = https.request(request)
+# puts response.read_body
+
+
+cart_itemc
+  order.amount_total = JSON.parse(@response.body)["items"].last["amount_paid"]
+
+    

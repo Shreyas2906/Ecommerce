@@ -27,7 +27,6 @@
               </div>
 
               <div class="name-product">
-              <%# byebug %>
               <%= a.product.title rescue nil%>
               </div>
           </div>

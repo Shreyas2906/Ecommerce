@@ -40,8 +40,13 @@ Rails.application.routes.draw do
   get "/carts/success", to: "cart_items#success"
   get "/carts/cancel", to: "cart_items#cancel"
   get "/success", to: "cart_items#success_page"
-  get "/cancel", to: "cart_items#cancel_page"
+  
 
+  post "/cash_on_dilevery", to: "cart_items#cash_on_dilevery"
+
+  get "/cart_items_razor_success", to: "cart_items#cart_items_razor_success"
+
+  get "/destroy/:product_id", to: "cart_items#destroy"
 
   get "/orders", to: "orders#index"
   get "/cancel/:order_id", to: "orders#cancel"
