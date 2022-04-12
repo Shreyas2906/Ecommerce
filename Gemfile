@@ -66,7 +66,5 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-linkedin-oauth2'
 gem 'omniauth-github'
 gem 'omniauth-pinterest'
-
 gem 'stripe'
-
-
+gem 'figaro'

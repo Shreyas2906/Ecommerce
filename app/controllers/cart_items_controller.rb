@@ -42,7 +42,7 @@ def checkout
       current_user.cart.clear
       redirect_to "/success"
     else  
-    Stripe.api_key = "sk_test_51KJzIeSHDvKH3iF10nE5KxRQC29VqvcaOK0RcE8hLk69AygVBMF3L6QcQ9fy3HwOzndQIInOCN6iheJoIy7KEptf00pvuqYMHx"
+    Stripe.api_key = ENV["STRIPE_API_ID"]
     @session = Stripe::Checkout::Session.create({
       line_items: [{
         price_data: {

@@ -2,10 +2,10 @@
 <!-- <script src="https://js.stripe.com/v3/"></script> -->
 <script type="text/javascript">
 	<% session_id = @session.id %>
-	<% Stripe.api_key = 'sk_test_51KJzIeSHDvKH3iF10nE5KxRQC29VqvcaOK0RcE8hLk69AygVBMF3L6QcQ9fy3HwOzndQIInOCN6iheJoIy7KEptf00pvuqYMHx' %>
+	<% Stripe.api_key = ENV["STRIPE_API_ID"] %>
 
 	jQuery(document).ready(function($) {
-    var stripe = Stripe('pk_test_51KJzIeSHDvKH3iF1T3c9k7vgkNTmwzzQfAOpqTPB4FpgyloFj4Vyq7pl3G4sCBeNVJGJ3hImU2747Gf4UDhD71OM00r8lt30ZS');
+    var stripe = Stripe(ENV["STRIPE_SECRET_KEY"]);
     stripe.redirectToCheckout({ sessionId: "<%= @session.id %>" });
 	});
 </script>
