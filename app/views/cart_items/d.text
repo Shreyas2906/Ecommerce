@@ -1,0 +1,119 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<% if @cart.subtotal <= 0 %>
+<div class="cart">
+   <h1 style="text-align: center;"> Your cart is Empty <br>
+      <a href="/products" class="btn btn-warning "></i>Add Your product </a>
+   </h1>
+</div>
+<% else %>
+<div class="container px-4 py-5 mx-auto">
+<section class="h-100" style="background-color: #eee;">
+   <div class="container h-100 py-5">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+         <div class="col-10">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+               <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
+               <div>
+                  <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!" class="text-body">price <i
+                     class="fas fa-angle-down mt-1"></i></a></p>
+               </div>
+            </div>
+            <% @cart_items.each do |product| %>
+            <div class="card rounded-3 mb-4">
+               <div class="card-body p-4">
+                  <div class="row d-flex justify-content-between align-items-center">
+                     <div class="col-md-2 col-lg-2 col-xl-2">
+                        <%= image_tag product.item.image_url %> 
+                     </div>
+                     <div class="col-md-3 col-lg-3 col-xl-3">
+                        <p class="lead fw-normal mb-2"><%= product.item.title %></p>
+                     </div>
+                     <div class="col-md-3 col-lg-3 col-xl-3">
+                        <p class="lead fw-normal mb-2"><%= product.price  %></p>
+                     </div>
+                     <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                        Quantity <%= product.quantity %>
+                     </div>
+                     <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                        <%= link_to cart_item_remove_path(product) do %>remove         
+                      <% end %>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <% end %>
+            <!-- <div class="card mb-4">
+               <div class="card-body p-4 d-flex flex-row">
+                 <div class="form-outline flex-fill">
+                   <input type="text" id="form1" class="form-control form-control-lg" />
+                   <label class="form-label" for="form1">Discound code</label>
+                 </div>
+                 <button type="button" class="btn btn-outline-warning btn-lg ms-3">Apply</button>
+               </div>
+               </div> -->
+            <br>
+            <strong>Select one Address </strong>
+            <%= form_for "data", url: "/checkout_razor" do |form| %>
+            <% current_user.addresses.each do |ad|%>
+            <div class="card" style="width: 18rem;">
+               <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                     <p><input type="radio" name="order[address_id]" class="choose_address" value="<%= ad.id %>" required> <%= ad.state %> , <%= ad.line1%> , <%= ad.phone%> , <%= ad.pincode%> , <%= ad.country%></p>
+                  </li>
+               </ul>
+            </div>
+            <% end %>
+            <a href="/addresses/new">Create new address </a>
+            <div class="card">
+               <div class="card-body">
+                  <!-- <form action="/addresses" method="GET"> -->
+                  <!-- <button type="submit" value = "dadad" class="btn btn-warning btn-block btn-lg"><i class="fa fa-shopping-bag" aria-hidden="true"></i> cash on delivery &#8377;<%#= @cart.subtotal %></button> -->
+                  <br>
+                  <!-- <form action="/create-checkout-session" method="POST"> -->
+                  <button type="submit" class="btn btn-warning btn-block btn-lg"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Checkout with R &#8377;<%= @cart.subtotal %></button>
+                  <!-- </form> -->
+               </div>
+            </div>
+            <% end %>  
+         </div>
+      </div>
+   </div>
+   <%= form_for "data", url: "/cash_on_dilevery" do |form| %>
+<% current_user.addresses.each do |ad|%>
+<div class="card" style="width: 18rem;">
+   <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+         <p><input type="radio" name="order[address_id]" class="choose_address" value="<%= ad.id %>" required> <%= ad.state %> , <%= ad.line1%> , <%= ad.phone%> , <%= ad.pincode%> , <%= ad.country%></p>
+      </li>
+   </ul>
+</div>
+<div class="card">
+<div class="card-body">
+<!-- <form action="/addresses" method="GET"> -->
+<!-- <button type="submit" value = "dadad" class="btn btn-warning btn-block btn-lg"><i class="fa fa-shopping-bag" aria-hidden="true"></i> cash on delivery &#8377;<%#= @cart.subtotal %></button> -->
+<% end %>
+<a href="/addresses/new">Create new address </a>
+<input type="submit" name="order[cash_on_dilevery]" class="btn btn-warning btn-block btn-lg" value="cash on delivery &#8377;<%= @cart.subtotal %>" />
+<% end %>
+</section>
+<% end %>
+
+<script type="text/javascript">
+   $(function(){
+     $("input[type='radio']").change(function(){
+       $("input[type='submit']").prop("disabled", false);
+     });
+   });
+   $(document).ready(function(){
+     $("input").prop('required', true);
+     $("text_field").prop('required', true);
+   });
+</script>
+<style type="text/css">
+   .cart{
+   margin-top: 11%;
+   margin-bottom: 15%;
+   height: 100%;
+   width: 100%;
+   }
+</style>

@@ -103,4 +103,57 @@ total amount = <%= @cart.subtotal %>
 cart_itemc
   order.amount_total = JSON.parse(@response.body)["items"].last["amount_paid"]
 
-    
+    current_user.cart.subtotal.to_i
+
+
+
+
+
+
+
+
+    after line 44 in cart_itemindex
+     <!-- <div class="card mb-4">
+               <div class="card-body p-4 d-flex flex-row">
+                 <div class="form-outline flex-fill">
+                   <input type="text" id="form1" class="form-control form-control-lg" />
+                   <label class="form-label" for="form1">Discound code</label>
+                 </div>
+                 <button type="button" class="btn btn-outline-warning btn-lg ms-3">Apply</button>
+               </div>
+               </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <%= form_for "data", url: "/checkout_razor" do |form| %>
+            <% current_user.addresses.each do |ad|%>
+            <div class="card" style="width: 18rem;">
+               <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                     <p><input type="radio" name="order[address_id]" class="choose_address" value="<%= ad.id %>" required> <%= ad.state %> , <%= ad.line1%> , <%= ad.phone%> , <%= ad.pincode%> , <%= ad.country%></p>
+                  </li>
+               </ul>
+            </div>
+            <% end %>
+            <a href="/addresses/new">Create new address </a>
+            <div class="card">
+               <div class="card-body">
+                  <!-- <form action="/addresses" method="GET"> -->
+                  <!-- <button type="submit" value = "dadad" class="btn btn-warning btn-block btn-lg"><i class="fa fa-shopping-bag" aria-hidden="true"></i> cash on delivery &#8377;<%#= @cart.subtotal %></button> -->
+                  <br>
+                  <!-- <form action="/create-checkout-session" method="POST"> -->
+                  <button type="submit" class="btn btn-warning btn-block btn-lg"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Checkout with R &#8377;<%= @cart.subtotal %></button>
+                  <!-- </form> -->
+               </div>
+            </div>
+            <% end %>

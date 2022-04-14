@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @aadress.email %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @aadress.name %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @aadress.phone %>
+</p>
+
+<p>
+  <strong>Line1:</strong>
+  <%= @aadress.line1 %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @aadress.country %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @aadress.state %>
+</p>
+
+<p>
+  <strong>Pincode:</strong>
+  <%= @aadress.pincode %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @aadress.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_aadress_path(@aadress) %> |
+<%= link_to 'Back', aadresses_path %>

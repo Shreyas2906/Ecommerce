@@ -23,7 +23,7 @@ class OrdersController < ApplicationController
       require "uri"
       require "net/http"
 
-      url = URI("https://api.razorpay.com/v1/payments/#{order.payment_id}/refund")
+      url = URI("https://api.razorpay.com/v1/payments/#{order.payment_intent}/refund")
 
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
@@ -31,7 +31,8 @@ class OrdersController < ApplicationController
       request = Net::HTTP::Post.new(url)
       request["Authorization"] = "Basic cnpwX3Rlc3RfNkhNVXdhZ2JRWTJzZUY6N1pkUTRkYk9SVW1DNnk5UEo0OE94clJ1"
       request["Content-Type"] = "application/json"
-      request.body = "{  \n\"amount\": 3500\n}"
+      request.body = "{  \n\"amount\": order.amount_total.to_i-10}"
+      byebug
       response = https.request(request)
       puts response.read_body
       OrderStatus.create(order_id: params[:order_id], status: "cancelled" )

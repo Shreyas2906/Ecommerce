@@ -70,6 +70,22 @@ def checkout
   end
 
   def checkout_razor
+    byebug
+    if params["order"]["cash_on_delivery"].present?
+      @cart_items = Product.where(id: current_user.cart.cart_items.map(&:item_id))
+      order = OrderBooking.new
+      order.customer_email = current_user.email
+      order.customer_id = current_user.id
+      order.user_id = current_user.id
+      order.product_id = current_user.cart.cart_items.map(&:item_id)
+      order.amount_total = current_user.cart.subtotal
+      order.address_id = params["order"]["address_id"]
+      order.cash_on_delivery = true
+      order.save
+      OrderStatus.create(order_id: params[:order_id], status: "created")
+      current_user.cart.clear
+      redirect_to "/success"
+  else
     require "uri"
     require "net/http"
 
@@ -103,6 +119,7 @@ def checkout
     @response = https.request(request)
     @sort_url = JSON.parse(@response.read_body)["short_url"]
     current_user.cart.clear
+  end
 
   end
 
@@ -187,9 +204,9 @@ def total
 end
 
 def cash_on_dilevery
+  byebug
   order = OrderBooking.new
-   
-    current_user.cart.clear
+   current_user.cart.clear
     redirect_to "/success"
 end
   

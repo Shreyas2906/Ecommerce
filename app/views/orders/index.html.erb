@@ -6,7 +6,7 @@
 				<div class="col-lg-10 col-xl-8">
 					<div class="card" style="border-radius: 10px;">
 					  <div class="card-header px-4 py-5">
-					    <h5 class="text-muted mb-0">Thanks for your Order, <span style="color: #a8729a;">Anna</span>!</h5>
+					    <h5 class="text-muted mb-0">Thanks for your Order, <span style="color: #a8729a;"><%= current_user.name%></span>!</h5>
 					  </div>
 					  <div class="card-body p-4">
 					    <div class="d-flex justify-content-between align-items-center mb-4">
@@ -76,9 +76,9 @@
 							    
 							    <div class="d-flex justify-content-between mb-5">
 							      <p class="text-muted mb-0">Address  : 
-							      	<% @address = Address.find_by(id: order.address_id) %>
-							      	<% if @address.present? %>
-							      		<%= @address.line1 %>, <%= @address.landmark %>, <%= @address.state %>, <%= @address.pincode %></p>
+							      	<% @aadress = Aadress.find_by(id: order.address_id) %>
+							      	<% if @aadress.present? %>
+							      		<%= @aadress.line1 %>, <%= @aadress.state %>, <%= @aadress.pincode %></p>
 							      	<% end %>	
 							    </div>
 					  </div>

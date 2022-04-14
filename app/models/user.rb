@@ -10,7 +10,7 @@ class User < ApplicationRecord
   has_many :authentications, dependent: :destroy
 	validates :email, :uniqueness => {:allow_blank => true}
 
-	has_many :addresses
+	has_many :aadresses
 	has_many :order_bookings
 
 end

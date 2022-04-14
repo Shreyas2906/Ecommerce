@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  resources :aadresses
   resources :cats
   root "products#index"
+  resources :addresses
 
   resources :homes
   devise_for :admin_users, ActiveAdmin::Devise.config
