@@ -67,7 +67,8 @@
 							    </div>
 
 							    <div class="d-flex justify-content-between mb-5">
-							      <p class="text-muted mb-0">Phone number  : <%= order.customer_phone%></p>
+							      <p class="text-muted mb-0">Phone number  :
+							       <%= order.user.telephone%></p>
 							      <p class="text-muted mb-0"><span class="fw-bold me-4">Delivery Charges</span> Free</p>
 							    </div>
 							    <div class="d-flex justify-content-between mb-5">
@@ -76,9 +77,10 @@
 							    
 							    <div class="d-flex justify-content-between mb-5">
 							      <p class="text-muted mb-0">Address  : 
-							      	<% @aadress = Aadress.find_by(id: order.address_id) %>
-							      	<% if @aadress.present? %>
-							      		<%= @aadress.line1 %>, <%= @aadress.state %>, <%= @aadress.pincode %></p>
+							      	<% @address = Address.find_by(id: order.address_id) %>
+							      
+							      	<% if @address.present? %>
+							      		<%= @address.line1 %>, <%= @address.state %>, <%= @address.pincode %></p>
 							      	<% end %>	
 							    </div>
 					  </div>

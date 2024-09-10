@@ -1,11 +1,10 @@
 class AddressesController < ApplicationController
 
-	def new
-		byebug
-	@address = Address.new	
-	end
+  def new
+    @address = Address.new
+  end
 
-	def create
+  def create
     @address = Address.new(address_params)
     respond_to do |format|
       if @address.save
@@ -18,9 +17,14 @@ class AddressesController < ApplicationController
     end
   end
 
+  def show
+    @address = Address.find(params[:id])
+  end
+
+
   private
-  def product_params
-      params.require(:product).permit(:email, :name, :line1, :state, :country, :phone, :pincode, :landmark)
-    end
-	
+
+  def address_params
+    params.require(:address).permit(:email, :name, :line1, :state, :country, :phone, :pincode)
+  end
 end

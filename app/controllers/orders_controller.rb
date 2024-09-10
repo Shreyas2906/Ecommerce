@@ -32,7 +32,6 @@ class OrdersController < ApplicationController
       request["Authorization"] = "Basic cnpwX3Rlc3RfNkhNVXdhZ2JRWTJzZUY6N1pkUTRkYk9SVW1DNnk5UEo0OE94clJ1"
       request["Content-Type"] = "application/json"
       request.body = "{  \n\"amount\": order.amount_total.to_i-10}"
-      byebug
       response = https.request(request)
       puts response.read_body
       OrderStatus.create(order_id: params[:order_id], status: "cancelled" )

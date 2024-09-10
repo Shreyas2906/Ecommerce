@@ -40,13 +40,13 @@
           </div>
         <% end %>
         <br>
-        <strong>Select one Address </strong>
+        <strong>Select one Address 1 </strong>
         <%= form_for "data", url: "/checkout_razor" do |form| %>
-          <% current_user.aadresses.each do |ad|%>
+          <% current_user.addresses.each do |ad|%>
             <p><input type="radio" name="order[address_id]" class="choose_address" value="<%= ad.id %>" required> <%= ad.state %> , <%= ad.line1%> , <%= ad.phone%> , <%= ad.pincode%> , <%= ad.country%></p></li>
           <% end %>
            <a href="/addresses/new">Create new address</a>
-          <% if current_user.aadresses.present? %> 
+          <% if current_user.addresses.present? %> 
             <div class="card">
               <div class="card-body">
                  <!-- <form action="/addresses" method="GET"> -->

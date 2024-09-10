@@ -52,7 +52,7 @@
                </div>
                </div> -->
             <br>
-            <strong>Select one Address </strong>
+            <strong>Select one Address  3</strong>
             <%= form_for "data", url: "/checkout_razor" do |form| %>
             <% current_user.addresses.each do |ad|%>
             <div class="card" style="width: 18rem;">
